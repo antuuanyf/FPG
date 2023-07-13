@@ -22,7 +22,7 @@ class Enemy extends Player {
                 this.shootDirection = 'right'
             }
             if (key === "ArrowUp" && this.canJump) {
-                this.velY -= 15
+                this.velY -= this.isInLadder ? 5 : 15
                 this.canJump = false
             }
             if (key === "ArrowDown" && this.canShoot && this.shootDirection === 'left') {

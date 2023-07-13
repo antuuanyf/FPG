@@ -19,9 +19,9 @@ const game = {
     platforms: [],
     ladders: [],
 
-    victoryScreen: null,
-    defeatScreen: null,
-
+    background: null,
+    player1Screen: null,
+    player2Screen: null,
 
     initCanvas() {
         this.canvas = document.querySelector("#canvas")
@@ -29,10 +29,12 @@ const game = {
     },
 
     loadImages() {
-        this.victoryScreen = new Image()
-        //this.victoryScreen.src = "./assets/images/victory.png"
-        this.defeatScreen = new Image()
-        //this.defeatScreen.src = "./assets/images/defeat.jpg"
+        this.player1Screen = new Image()
+        this.player1Screen.src = "./assets/images/player1_win.png"
+        this.player2Screen = new Image()
+        this.player2Screen.src = "./assets/images/player2_win.png"
+        this.background = new Image()
+        this.background.src = "./assets/images/background.jpg"
     },
 
     setDimensions() {
@@ -51,24 +53,24 @@ const game = {
         this.platforms.push(
             new Platform(this.ctx, this.height, 0, 50, this.width, 50), // Floor
             new Platform(this.ctx, this.height, this.halfWidth + 20, 150, 250, 25), // plataform 1
-            new Platform(this.ctx, this.height, this.halfWidth + 30, 50, 250, 25), // plataform 2 777
-            new Platform(this.ctx, this.height, this.halfWidth - 60, 300, 250, 25), // plataform 3 777
-            new Platform(this.ctx, this.height, this.width - 250, this.halfHeight, 250, 25), // plataform 4 ahmed
-            new Platform(this.ctx, this.height, this.halfWidth - 120, this.halfHeight + 30, 250, 25), // plataform 5 ahmed
+            new Platform(this.ctx, this.height, this.halfWidth + 30, 50, 250, 25), // plataform 2
+            new Platform(this.ctx, this.height, this.halfWidth - 60, 300, 250, 25), // plataform 3
+            new Platform(this.ctx, this.height, this.width - 250, this.halfHeight, 250, 25), // plataform 4 
+            new Platform(this.ctx, this.height, this.halfWidth - 120, this.halfHeight + 30, 250, 25), // plataform 5
             new Platform(this.ctx, this.height, 0, 450, 250, 25), // plataform 6
-            new Platform(this.ctx, this.height, 0, 600, 400, 25), // 777
-            new Platform(this.ctx, this.height, 0, 300, 500, 25), // 777 
-            new Platform(this.ctx, this.height, this.halfWidth - 60, 675, 1000, 25),
+            new Platform(this.ctx, this.height, 0, 600, 400, 25), // 
+            new Platform(this.ctx, this.height, 0, 300, 500, 25), // 
+            new Platform(this.ctx, this.height, this.halfWidth - 60, 675, 1000, 25), // Ultima
 
-        ) // ctx: any, canvasHeight: any, posX: any, posY: any, width: any, height: any
-        console.log(this.platforms[8])
+        )
         this.ladders.push(
             new Ladder(this.ctx, this.height, this.platforms[3].posX + this.platforms[3].width, this.platforms[3].posY, this.platforms[1].posY - this.platforms[3].posY),
             new Ladder(this.ctx, this.height, 0, this.platforms[6].posY + this.platforms[6].height, this.platforms[8].posY - (this.platforms[6].posY + this.platforms[6].height)),
             new Ladder(this.ctx, this.height, this.platforms[6].width - 30, this.platforms[7].posY + this.platforms[7].height, this.platforms[6].posY - (this.platforms[7].posY + this.platforms[7].height))
-        ) // ctx, canvasHeight, posX, posY, width, height
+        )
     },
     drawAll() {
+        this.ctx.drawImage(this.background, 0, 0, this.width, this.height)
         this.platforms.forEach(platform => platform.draw())
         this.ladders.forEach(ladder => ladder.draw())
         this.player.update()
@@ -102,7 +104,7 @@ const game = {
                 bullet.posY < this.enemy.posY + this.enemy.height) {
                 this.enemy.lives--
                 this.player.bullets.splice(index, 1)
-                if (this.enemy.lives === 0) this.gameFinished(this.defeatScreen)
+                if (this.enemy.lives === 0) this.gameFinished(this.player1Screen)
             }
         })
 
@@ -113,7 +115,7 @@ const game = {
                 bullet.posY < this.player.posY + this.player.height) {
                 this.player.lives--
                 this.enemy.enemyBullets.splice(index, 1)
-                if (this.player.lives === 0) this.gameFinished(this.defeatScreen)
+                if (this.player.lives === 0) this.gameFinished(this.player2Screen)
             }
         })
 
@@ -132,6 +134,20 @@ const game = {
                 this.enemy.velY = 0
                 this.enemy.canJump = true
             }
+        })
+
+        this.player.isInLadder = this.ladders.some(ladder => {
+            return (this.player.posX + this.player.width > ladder.posX &&
+                this.player.posX < ladder.posX + ladder.width &&
+                this.player.posY + this.player.height > ladder.posY &&
+                this.player.posY < ladder.posY + ladder.height)
+        })
+
+        this.enemy.isInLadder = this.ladders.some(ladder => {
+            return (this.enemy.posX + this.enemy.width > ladder.posX &&
+                this.enemy.posX < ladder.posX + ladder.width &&
+                this.enemy.posY + this.enemy.height > ladder.posY &&
+                this.enemy.posY < ladder.posY + ladder.height)
         })
 
     },

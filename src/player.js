@@ -16,6 +16,7 @@ class Player {
         this.canMoveRight = false
         this.canShoot = true
         this.shootDirection = ''
+        this.isInLadder = false
 
         this.lives = 10
 
@@ -25,7 +26,7 @@ class Player {
     update() {
         this.draw()
         this.move()
-        this.activateGravity()
+        !this.isInLadder && this.activateGravity()
         this.checkFloor()
     }
 
@@ -63,7 +64,7 @@ class Player {
                 this.shootDirection = 'right'
             }
             if (key === "w" && this.canJump) {
-                this.velY -= 15
+                this.velY -= this.isInLadder ? 5 : 15
                 this.canJump = false
             }
             if (key === "s" && this.canShoot && this.shootDirection === 'left') {
