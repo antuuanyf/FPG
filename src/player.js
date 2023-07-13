@@ -66,11 +66,11 @@ class Player {
                 this.velY -= 15
                 this.canJump = false
             }
-            if (key === "e" && this.canShoot && this.shootDirection === 'left') {
+            if (key === "s" && this.canShoot && this.shootDirection === 'left') {
                 this.bullets.push(new Bullet(this.ctx, this.posX, this.posY, this.width, this.height,this.shootDirection))
                 this.canShoot = false
             }
-            if (key === "e" && this.canShoot && this.shootDirection === 'right') {
+            if (key === "s" && this.canShoot && this.shootDirection === 'right') {
                 this.bullets.push(new Bullet(this.ctx, this.posX, this.posY, this.width, this.height,this.shootDirection))
                 this.canShoot = false
             }

@@ -1,0 +1,42 @@
+body {
+    background-color: rgb(204, 204, 204);
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.menu {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url(assets/images/FPG_menu.png);
+    background-size: cover;
+    background-position: center;
+}
+
+.button {
+    margin-top: 340px;
+    box-shadow: 1px 1px 100px white;
+}
+
+.normal-button {
+    text-decoration: none;
+    color: black;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    font-family: 'ArcadeClassic', sans-serif;
+    font-size: 50px;
+    background-color: white;
+}
+
+a:hover {
+    font-size: 52px;
+}
+
+.non-display {
+    display: none;
+}
