@@ -1,8 +1,8 @@
 class Bullet {
     constructor(ctx, playerPosX, playerPosY, playerWidth, playerHeight, playerShootDirection) {
         this.ctx = ctx
-        this.width = 50
-        this.height = 10
+        this.width = 7
+        this.height = 3
         this.direction = playerShootDirection
 
         if (this.direction === 'left') {
@@ -21,7 +21,7 @@ class Bullet {
     }
 
     draw() {
-        this.ctx.fillStyle = "black"
+        this.ctx.fillStyle = "yellow"
         this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
     }
 

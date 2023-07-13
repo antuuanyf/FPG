@@ -34,7 +34,7 @@ const game = {
         this.player2Screen = new Image()
         this.player2Screen.src = "./assets/images/player2_win.png"
         this.background = new Image()
-        this.background.src = "./assets/images/background.jpg"
+        this.background.src = "./assets/images/background.png"
     },
 
     setDimensions() {
@@ -49,24 +49,21 @@ const game = {
     generateAll() {
         this.player = new Player(this.ctx, this.height, this.width, 50)
         this.enemy = new Enemy(this.ctx, this.height, this.width, this.width - 75)
-        console.log(this.player, this.enemy)
+        console.log(this.player.imageRight.width)
         this.platforms.push(
-            new Platform(this.ctx, this.height, 0, 50, this.width, 50), // Floor
-            new Platform(this.ctx, this.height, this.halfWidth + 20, 150, 250, 25), // plataform 1
-            new Platform(this.ctx, this.height, this.halfWidth + 30, 50, 250, 25), // plataform 2
-            new Platform(this.ctx, this.height, this.halfWidth - 60, 300, 250, 25), // plataform 3
-            new Platform(this.ctx, this.height, this.width - 250, this.halfHeight, 250, 25), // plataform 4 
-            new Platform(this.ctx, this.height, this.halfWidth - 120, this.halfHeight + 30, 250, 25), // plataform 5
-            new Platform(this.ctx, this.height, 0, 450, 250, 25), // plataform 6
-            new Platform(this.ctx, this.height, 0, 600, 400, 25), // 
-            new Platform(this.ctx, this.height, 0, 300, 500, 25), // 
-            new Platform(this.ctx, this.height, this.halfWidth - 60, 675, 1000, 25), // Ultima
-
-        )
+            new Platform(this.ctx, this.height, 0, 130, this.width, 130), // Floor 0
+            new Platform(this.ctx, this.height, this.halfWidth - 60, 300, 250, 25,), // 1
+            new Platform(this.ctx, this.height, this.width - 250, this.halfHeight, 250, 25), // 2
+            new Platform(this.ctx, this.height, this.halfWidth - 120, this.halfHeight + 30, 250, 25), // 3
+            new Platform(this.ctx, this.height, 0, 450, 250, 25), // 4
+            new Platform(this.ctx, this.height, 0, 600, 400, 25), // 5
+            new Platform(this.ctx, this.height, 0, 300, 500, 25), // 6
+            new Platform(this.ctx, this.height, this.halfWidth - 60, 675, 1000, 25), // 7
+        ) // ctx, canvasHeight, posX, posY, width, height
         this.ladders.push(
-            new Ladder(this.ctx, this.height, this.platforms[3].posX + this.platforms[3].width, this.platforms[3].posY, this.platforms[1].posY - this.platforms[3].posY),
-            new Ladder(this.ctx, this.height, 0, this.platforms[6].posY + this.platforms[6].height, this.platforms[8].posY - (this.platforms[6].posY + this.platforms[6].height)),
-            new Ladder(this.ctx, this.height, this.platforms[6].width - 30, this.platforms[7].posY + this.platforms[7].height, this.platforms[6].posY - (this.platforms[7].posY + this.platforms[7].height))
+            new Ladder(this.ctx, this.height, this.platforms[1].posX + this.platforms[1].width, this.platforms[1].posY, this.platforms[0].posY - this.platforms[1].posY),
+            new Ladder(this.ctx, this.height, 0, this.platforms[4].posY + this.platforms[4].height, this.platforms[6].posY - (this.platforms[4].posY + this.platforms[4].height)),
+            new Ladder(this.ctx, this.height, this.platforms[4].width - 30, this.platforms[5].posY + this.platforms[5].height, this.platforms[4].posY - (this.platforms[5].posY + this.platforms[5].height))
         )
     },
     drawAll() {
@@ -82,7 +79,7 @@ const game = {
             bullet.update()
         })
         this.ctx.fillStyle = 'black'
-        this.ctx.font = 'bold 15px'
+        this.ctx.font = 'bold 20px'
         this.ctx.fillText(`Player 1 lives: ${this.player.lives}`, 30, 30)
         this.ctx.fillText(`Player 2 lives: ${this.enemy.lives}`, this.canvas.width - 135, 30)
     },
@@ -170,12 +167,25 @@ const game = {
                 this.player.canShoot = true
                 this.enemy.canShoot = true
             }
+            if (this.frames % 6 === 0) {
+                if (this.player.sX === 240) {
+                    this.player.sX = 0
+                    return
+                }
+                this.player.sX += 48
+            }
+            if (this.frames % 6 === 0) {
+                if (this.enemy.sX === 240) {
+                    this.enemy.sX = 0
+                    return
+                }
+                this.enemy.sX += 48
+            }
             this.clearAll()
             this.drawAll()
             this.clearItems()
             this.checkCollisions()
         }, 1000 / this.FPS) // 1000  / 60
-
     },
 
     init() {

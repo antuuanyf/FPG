@@ -3,11 +3,15 @@ class Enemy extends Player {
         super(ctx, canvasHeight, canvasWidth, posX)
 
         this.enemyBullets = []
+
+        this.image = new Image()
+        this.image.src = "./assets/images/player2_Idle.png"
     }
 
     draw() {
-        this.ctx.fillStyle = "red"
-        this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        // this.ctx.fillStyle = "red"
+        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        this.ctx.drawImage(this.image, this.sX, this.sY, this.image.width / 5, this.image.height, this.posX - this.width, this.posY - 20, (this.image.width / 5) * 2, this.image.height * 2)
     }
 
     setEventListeners() {

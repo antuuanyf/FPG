@@ -4,10 +4,10 @@ class Player {
         this.canvasWidth = canvasWidth
         this.canvasHeight = canvasHeight
 
-        this.height = 75
+        this.height = 60
         this.width = 25
         this.posX = posX
-        this.posY = this.canvasHeight - this.height - 50
+        this.posY = this.canvasHeight - this.height - 130
         this.velY = 0
         this.gravity = 0.9
 
@@ -21,6 +21,12 @@ class Player {
         this.lives = 10
 
         this.bullets = []
+
+        this.imageRight = new Image()
+        this.imageRight.src = './assets/images/player1_Idle.png'
+
+        this.sX = 0
+        this.sY = 0
     }
 
     update() {
@@ -31,8 +37,9 @@ class Player {
     }
 
     draw() {
-        this.ctx.fillStyle = "blue"
-        this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        // this.ctx.fillStyle = "blue"
+        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        this.ctx.drawImage(this.imageRight, this.sX, this.sY, this.imageRight.width / 5, this.imageRight.height, this.posX - this.width, this.posY - 20, (this.imageRight.width / 5) * 2, this.imageRight.height * 2)
     }
 
     activateGravity() {
@@ -40,7 +47,7 @@ class Player {
     }
 
     checkFloor() {
-        if (this.posY + this.height + this.velY >= this.canvasHeight - 50) {
+        if (this.posY + this.height + this.velY >= this.canvasHeight - 130) {
             this.velY = 0
             this.canJump = true
         }
