@@ -30,9 +30,9 @@ const game = {
 
     loadImages() {
         this.victoryScreen = new Image()
-        // this.victoryScreen.src = "./assets/images/victory.png"
+        //this.victoryScreen.src = "./assets/images/victory.png"
         this.defeatScreen = new Image()
-        // this.defeatScreen.src = "./assets/images/defeat.jpg"
+        //this.defeatScreen.src = "./assets/images/defeat.jpg"
     },
 
     setDimensions() {
@@ -116,6 +116,24 @@ const game = {
                 if (this.player.lives === 0) this.gameFinished(this.defeatScreen)
             }
         })
+
+        this.platforms.forEach(platform => {
+            if (this.player.posX + this.player.width > platform.posX &&
+                this.player.posX < platform.posX + platform.width &&
+                this.player.posY + this.player.height + this.player.velY > platform.posY &&
+                this.player.posY + this.player.height < platform.posY) {
+                this.player.velY = 0
+                this.player.canJump = true
+            }
+            if (this.enemy.posX + this.enemy.width > platform.posX &&
+                this.enemy.posX < platform.posX + platform.width &&
+                this.enemy.posY + this.enemy.height + this.enemy.velY > platform.posY &&
+                this.enemy.posY + this.enemy.height < platform.posY) {
+                this.enemy.velY = 0
+                this.enemy.canJump = true
+            }
+        })
+
     },
 
     gameFinished(image) {
