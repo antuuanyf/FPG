@@ -1,5 +1,5 @@
 const game = {
-    author: "Jesús, Antonio, Eric, Guille",                                   //"Sergio"
+    author: "Antonio",
     version: "1.0",
     title: "FPG",
     description: "Fighting Platformer Game.",
