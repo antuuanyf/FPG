@@ -10,8 +10,6 @@ class Bullet {
         } else if (this.direction === 'right') {
             this.posX = playerPosX + playerWidth + 25
         }
-
-        // this.posX = playerPosX + playerWidth
         this.posY = playerPosY + (playerHeight / 2) - 8
     }
 

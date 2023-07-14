@@ -5,13 +5,47 @@ class Enemy extends Player {
         this.enemyBullets = []
 
         this.image = new Image()
-        this.image.src = "./assets/images/player2_Idle.png"
+        this.image.src = './assets/images/player2_IdleLeft.png'
+
+        this.sX = 0
+        this.sY = 0
+        this.lastFrame = 192
+        this.frameIncrement = 48
+        this.imageCols = 5
+    }
+
+    switchSprites() {
+        if (this.shootDirection === 'left' && !this.canMoveLeft) {
+            if (this.sX > 192) this.sX = 0
+            this.image.src = './assets/images/player2_IdleLeft.png'
+            this.imageCols = 5
+            this.lastFrame = 192
+            this.frameIncrement = 48
+        }
+        if (this.shootDirection === 'right' && !this.canMoveRight) {
+            if (this.sX > 192) this.sX = 0
+            this.image.src = './assets/images/player2_Idle.png'
+            this.imageCols = 5
+            this.lastFrame = 192
+            this.frameIncrement = 48
+        }
+        if (this.canMoveLeft) {
+            this.image.src = './assets/images/player2_RunLeft.png'
+            this.imageCols = 6
+            this.lastFrame = 240
+            this.frameIncrement = 48
+        }
+        if (this.canMoveRight) {
+            this.image.src = './assets/images/player2_Run.png'
+            this.imageCols = 6
+            this.lastFrame = 240
+            this.frameIncrement = 48
+        }
     }
 
     draw() {
-        // this.ctx.fillStyle = "red"
-        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
-        this.ctx.drawImage(this.image, this.sX, this.sY, this.image.width / 5, this.image.height, this.posX - this.width, this.posY - 20, (this.image.width / 5) * 2, this.image.height * 2)
+        this.switchSprites()
+        this.ctx.drawImage(this.image, this.sX, this.sY, this.image.width / this.imageCols, this.image.height, this.posX - this.width, this.posY - 20, (this.image.width / this.imageCols) * 2, this.image.height * 2)
     }
 
     setEventListeners() {

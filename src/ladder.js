@@ -6,11 +6,15 @@ class Ladder {
         this.posY = posY
         this.height = height
         this.width = 30
+
+        this.image = new Image()
+        this.image.src = './assets/images/ladder.jpg'
     }
 
     draw() {
-        this.ctx.fillStyle = "brown"
-        this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        // this.ctx.fillStyle = "brown"
+        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
     }
 
 }

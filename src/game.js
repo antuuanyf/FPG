@@ -1,5 +1,5 @@
 const game = {
-    author: "Antonio",
+    author: "Jesús, Antonio, Eric, Guille",                                   //"Sergio"
     version: "1.0",
     title: "FPG",
     description: "Fighting Platformer Game.",
@@ -49,9 +49,8 @@ const game = {
     generateAll() {
         this.player = new Player(this.ctx, this.height, this.width, 50)
         this.enemy = new Enemy(this.ctx, this.height, this.width, this.width - 75)
-        console.log(this.player.imageRight.width)
         this.platforms.push(
-            new Platform(this.ctx, this.height, 0, 130, this.width, 130), // Floor 0
+            new Platform(this.ctx, this.height, 0, 130, this.width, 130, true), // Floor 0
             new Platform(this.ctx, this.height, this.halfWidth - 60, 300, 250, 25,), // 1
             new Platform(this.ctx, this.height, this.width - 250, this.halfHeight, 250, 25), // 2
             new Platform(this.ctx, this.height, this.halfWidth - 120, this.halfHeight + 30, 250, 25), // 3
@@ -68,7 +67,9 @@ const game = {
     },
     drawAll() {
         this.ctx.drawImage(this.background, 0, 0, this.width, this.height)
-        this.platforms.forEach(platform => platform.draw())
+        this.platforms.forEach((platform, i) => {
+            if (!platform.isFloor) platform.draw()
+        })
         this.ladders.forEach(ladder => ladder.draw())
         this.player.update()
         this.enemy.update()
@@ -168,19 +169,20 @@ const game = {
                 this.enemy.canShoot = true
             }
             if (this.frames % 6 === 0) {
-                if (this.player.sX === 192) {
+                if (this.player.sX >= this.player.lastFrame) {
                     this.player.sX = 0
                     return
                 }
-                this.player.sX += 48
+                this.player.sX += this.player.frameIncrement
             }
             if (this.frames % 6 === 0) {
-                if (this.enemy.sX === 192) {
+                if (this.enemy.sX >= this.enemy.lastFrame) {
                     this.enemy.sX = 0
                     return
                 }
-                this.enemy.sX += 48
+                this.enemy.sX += this.enemy.frameIncrement
             }
+
             this.clearAll()
             this.drawAll()
             this.clearItems()

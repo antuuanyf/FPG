@@ -22,11 +22,54 @@ class Player {
 
         this.bullets = []
 
-        this.imageRight = new Image()
-        this.imageRight.src = './assets/images/player1_Idle.png'
+        this.image = new Image()
+        this.image.src = './assets/images/player1_Idle.png'
 
         this.sX = 0
         this.sY = 0
+        this.lastFrame = 192
+        this.frameIncrement = 48
+        this.imageCols = 5
+    }
+
+    switchSprites() {
+        if (this.shootDirection === 'left' && !this.canMoveLeft) {
+            if (this.sX > 192) this.sX = 0
+            this.image.src = './assets/images/player1_IdleLeft.png'
+            this.imageCols = 5
+            this.lastFrame = 192
+            this.frameIncrement = 48
+            console.log('Estatico IZQ')
+        }
+        if (this.shootDirection === 'right' && !this.canMoveRight) {
+            if (this.sX > 192) this.sX = 0
+            this.image.src = './assets/images/player1_Idle.png'
+            this.imageCols = 5
+            this.lastFrame = 192
+            this.frameIncrement = 48
+            console.log('Estatico DER', this.imageCols, this.lastFrame, this.frameIncrement, this.sX)
+        }
+        if (this.canMoveLeft) {
+            this.image.src = './assets/images/player1_RunLeft.png'
+            this.imageCols = 6
+            this.lastFrame = 240
+            this.frameIncrement = 48
+            console.log('Run IZQ')
+        }
+        if (this.canMoveRight) {
+            this.image.src = './assets/images/player1_Run.png'
+            this.imageCols = 6
+            this.lastFrame = 240
+            this.frameIncrement = 48
+            console.log('Run DER', this.imageCols, this.lastFrame, this.frameIncrement, this.sX)
+        }
+    }
+
+    draw() {
+        // this.ctx.fillStyle = "blue"
+        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        this.switchSprites()
+        this.ctx.drawImage(this.image, this.sX, this.sY, this.image.width / this.imageCols, this.image.height, this.posX - this.width, this.posY - 20, (this.image.width / this.imageCols) * 2, this.image.height * 2)
     }
 
     update() {
@@ -34,12 +77,6 @@ class Player {
         this.move()
         !this.isInLadder && this.activateGravity()
         this.checkFloor()
-    }
-
-    draw() {
-        // this.ctx.fillStyle = "blue"
-        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
-        this.ctx.drawImage(this.imageRight, this.sX, this.sY, this.imageRight.width / 5, this.imageRight.height, this.posX - this.width, this.posY - 20, (this.imageRight.width / 5) * 2, this.imageRight.height * 2)
     }
 
     activateGravity() {
