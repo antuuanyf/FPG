@@ -168,14 +168,14 @@ const game = {
                 this.enemy.canShoot = true
             }
             if (this.frames % 6 === 0) {
-                if (this.player.sX === 240) {
+                if (this.player.sX === 192) {
                     this.player.sX = 0
                     return
                 }
                 this.player.sX += 48
             }
             if (this.frames % 6 === 0) {
-                if (this.enemy.sX === 240) {
+                if (this.enemy.sX === 192) {
                     this.enemy.sX = 0
                     return
                 }
